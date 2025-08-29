@@ -35,7 +35,7 @@ def fetch(url: str, timeout: float):
 
 def parse_args():
     p = argparse.ArgumentParser(
-        description="Mein kleiner HTTP-Client für Übung in Python & Git"
+        description="Mein kleiner HTTP-Client für Übung in Python & Git (jetzt mit Farben 🚦)"
     )
     p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Ziel-URL")
     p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout in Sekunden")
