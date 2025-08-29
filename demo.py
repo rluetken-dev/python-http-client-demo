@@ -7,16 +7,16 @@ from colorama import Fore, init
 
 
 
-init(autoreset=True)  # Farben nach jeder Ausgabe zurücksetzen
+init(autoreset=True)  # Colors reset after every output
 
 
 def fetch(url: str, timeout: float):
     try:
-        # Session mit Retry-Logik
+        # Session with retry-logic
         session = requests.Session()
         retry = Retry(
-            total=3,                # bis zu 3 Versuche
-            backoff_factor=0.5,     # 0.5s, 1s, 2s Wartezeit
+            total=3,                # up to 3 trys
+            backoff_factor=0.5,     # 0.5s, 1s, 2s waiting time
             status_forcelist=[429, 500, 502, 503, 504],
             allowed_methods=["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"]
         )
@@ -35,10 +35,10 @@ def fetch(url: str, timeout: float):
 
 def parse_args():
     p = argparse.ArgumentParser(
-        description="Mein kleiner HTTP-Client für Übung in Python & Git (jetzt mit Farben 🚦)"
+        description="My HTTP-client (SSH-Test commit)"
     )
-    p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Ziel-URL")
-    p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout in Sekunden")
+    p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Target-URL")
+    p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout in seconds")
     return p.parse_args()
 
 def main():
