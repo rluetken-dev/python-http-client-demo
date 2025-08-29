@@ -5,6 +5,8 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from colorama import Fore, init
 
+
+
 init(autoreset=True)  # Farben nach jeder Ausgabe zurücksetzen
 
 
@@ -31,15 +33,13 @@ def fetch(url: str, timeout: float):
     except requests.RequestException as e:
         return {"ok": False, "error": str(e), "url": url}
 
-
 def parse_args():
     p = argparse.ArgumentParser(
-        description="Kleiner HTTP-Client: holt eine URL und zeigt JSON schön formatiert an."
+        description="Mein kleiner HTTP-Client für Übung in Python & Git"
     )
     p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Ziel-URL")
     p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout in Sekunden")
     return p.parse_args()
-
 
 def main():
     args = parse_args()
