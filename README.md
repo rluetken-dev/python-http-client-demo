@@ -8,7 +8,6 @@ Practice project: a simple Python CLI tool that makes HTTP requests,
 supports retries, and shows colored output for success and errors. 
 
 ## Installation
-
 Clone the repository and install dependencies:
 
 ```bash
@@ -18,6 +17,7 @@ python -m venv .venv
 source .venv/bin/activate   # on Linux/Mac
 # .venv\Scripts\activate    # on Windows
 pip install -r requirements.txt
+```
 
 ## Features
 - GET requests with JSON response
@@ -29,4 +29,4 @@ pip install -r requirements.txt
 ```bash
 python demo.py --url https://httpbin.org/uuid
 python demo.py --url https://jsonplaceholder.typicode.com/todos/1 -t 3
-
+```
