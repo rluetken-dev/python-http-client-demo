@@ -1,4 +1,5 @@
 # Demo HTTP Client
+![CI](https://github.com/rluetken-dev/demo/actions/workflows/ci.yml/badge.svg)
 
 Practice project: a simple Python CLI tool that makes HTTP requests, 
 supports retries, and shows colored output for success and errors. 
