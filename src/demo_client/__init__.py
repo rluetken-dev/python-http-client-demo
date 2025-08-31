@@ -1,10 +1,10 @@
-import json
 import argparse
+import json
+
 import requests
+from colorama import Fore, init
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from colorama import Fore, init
-
 
 init(autoreset=True)  # Colors reset after every output
 
