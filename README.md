@@ -1,5 +1,5 @@
 # Demo HTTP Client
-![CI](https://github.com/rluetken-dev/demo/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/rluetken-dev/demo/actions/workflows/ci.yml/badge.svg?branch=master)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
