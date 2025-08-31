@@ -6,7 +6,6 @@ from urllib3.util.retry import Retry
 from colorama import Fore, init
 
 
-
 init(autoreset=True)  # Colors reset after every output
 
 
@@ -15,10 +14,18 @@ def fetch(url: str, timeout: float):
         # Session with retry-logic
         session = requests.Session()
         retry = Retry(
-            total=3,                # up to 3 trys
-            backoff_factor=0.5,     # 0.5s, 1s, 2s waiting time
+            total=3,  # up to 3 trys
+            backoff_factor=0.5,  # 0.5s, 1s, 2s waiting time
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH"]
+            allowed_methods=[
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "HEAD",
+                "OPTIONS",
+                "PATCH",
+            ],
         )
         adapter = HTTPAdapter(max_retries=retry)
         session.mount("http://", adapter)
@@ -33,13 +40,15 @@ def fetch(url: str, timeout: float):
     except requests.RequestException as e:
         return {"ok": False, "error": str(e), "url": url}
 
+
 def parse_args():
-    p = argparse.ArgumentParser(
-        description="My HTTP-client (SSH-Test commit)"
-    )
+    p = argparse.ArgumentParser(description="My HTTP-client (SSH-Test commit)")
     p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Target-URL")
-    p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout in seconds")
+    p.add_argument(
+        "--timeout", "-t", type=float, default=5.0, help="Timeout in seconds"
+    )
     return p.parse_args()
+
 
 def main():
     args = parse_args()
