@@ -27,7 +27,7 @@ jobs:
         run: black --check --diff .
 
       - name: isort (check only)
-        run: issort --check-only --diff .
+        run: isort --check-only --diff .
 
       - name: Lint with flake8
         run: |
