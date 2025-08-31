@@ -26,7 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest flake8 black isort pytest-cov bandit
-          pip install "safety<3.2" "typer<0.12"
+          pip install "safety<3.2" "typer<0.12" "marshmallow<4"
 
       # -------- Format / Lint --------
       - name: Black (check mode)
