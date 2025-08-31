@@ -4,9 +4,13 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read  # recommended for Codecov v4
+
 jobs:
-  tests:
+  ci:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,14 +19,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest flake8 black isort pytest-cov
+          pip install pytest flake8 black isort pytest-cov safety bandit
 
-      # --- Style/Format Checks ---
+      # -------- Format / Lint --------
       - name: Black (check mode)
         run: black --check --diff .
 
@@ -30,17 +35,24 @@ jobs:
         run: isort --check-only --diff .
 
       - name: Lint with flake8
-        run: |
-          flake8 src/ tests/
+        run: flake8 src/ tests/
 
-      # --- Tests + Coverage ---
+      # -------- Security --------
+      - name: Safety (vulnerability scan)
+        run: safety check --full-report -r requirements.txt --exit-code 1
+
+      # Fail for medium/high findings; tests are then not executed at all.
+      - name: Bandit (static security analysis)
+        run: bandit -r src -x tests -ll -ii
+
+      # -------- Tests + Coverage --------
       - name: Run tests with coverage
-        run: pytest -q --cov=src --cov-report=term-missing --cov-fail-under=65
+        run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=65
 
+      # -------- Codecov Upload --------
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # nur für private Repos
+          token: ${{ secrets.CODECOV_TOKEN }}   # for private repos (or if Codecov requires it)
           files: ./coverage.xml
           fail_ci_if_error: true
-
