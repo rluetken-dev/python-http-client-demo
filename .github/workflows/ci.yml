@@ -40,7 +40,7 @@ jobs:
 
       # -------- Security --------
       - name: Safety (vulnerability scan)
-        run: safety check --full-report -r requirements.txt --exit-code 1
+        run: safety check --full-report -r requirements.txt --exit-code 
 
       # Fail for medium/high findings; tests are then not executed at all.
       - name: Bandit (static security analysis)
