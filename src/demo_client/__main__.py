@@ -45,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         with httpx.Client(timeout=args.timeout) as client:
-            resp = client.request(args.method.upper(), args.url, data=args.data)
+            resp = client.request(args.method.upper(), args.url, content=args.data)
         print(f"Status: {resp.status_code}")
         print(f"Content-Type: {resp.headers.get('content-type', '')}")
         print("\n=== Body (first 800 chars) ===")
