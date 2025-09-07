@@ -1,6 +1,6 @@
 # Demo HTTP Client (Python)
 
-![CI](https://github.com/rluetken-dev/demo/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/rluetken-dev/python-http-client-demo/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue)
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
@@ -27,8 +27,8 @@ Includes formatting, linting, security checks, and unit tests.
 
 ### Quickstart
 ```bash
-git clone https://github.com/rluetken-dev/demo.git
-cd demo
+git clone https://github.com/rluetken-dev/python-http-client-demo.git
+cd python-http-client-demo
 python -m venv .venv && . .venv/bin/activate  # on Windows: .venv\Scripts\activate
 pip install -U pip
 pip install -e ".[dev]"  # install with extras for dev tools
