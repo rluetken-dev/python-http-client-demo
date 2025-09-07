@@ -8,7 +8,6 @@
 ![Vuln DB: Safety](https://img.shields.io/badge/vulnerabilities-safety-red.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-
 A small **Python CLI & library** for practicing clean code, packaging, and CI/CD.  
 Includes formatting, linting, security checks, and unit tests.
 
@@ -33,9 +32,20 @@ Includes formatting, linting, security checks, and unit tests.
 ```bash
 git clone https://github.com/rluetken-dev/python-http-client-demo.git
 cd python-http-client-demo
-python -m venv .venv && . .venv/bin/activate  # on Windows: .venv\Scripts\activate
+
+# Create & activate virtualenv
+python -m venv .venv
+# macOS/Linux:
+source .venv/bin/activate
+# Windows PowerShell:
+# .\.venv\Scripts\Activate.ps1
+
+# Install deps
 pip install -U pip
-pip install -e ".[dev]"  # install with extras for dev tools
+pip install -e ".[dev]"
+
+# Install git hooks
+pre-commit install
 ```
 
 ### Run
@@ -62,7 +72,7 @@ pre-commit run --all-files
 
 ## 📂 Project Structure
 ```
-demo/
+python-http-client-demo/
 ├─ src/demo_client/
 │  ├─ __init__.py
 │  └─ <modules>.py
