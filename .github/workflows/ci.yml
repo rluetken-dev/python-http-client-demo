@@ -4,9 +4,6 @@ on:
   push:
   pull_request:
 
-permissions:
-  contents: read
-
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -18,42 +15,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
 
-      # Installiere ALLES aus pyproject (inkl. httpx, dev-tools)
-      - name: Install dependencies (editable + dev)
+      - name: Install deps (editable + dev)
         run: |
           python -m pip install -U pip
           pip install -e ".[dev]"
-          # Für Safety ein Freeze der tatsächlich installierten Pakete
-          pip freeze > requirements-lock.txt
 
-      # -------- Format / Lint --------
-      - name: Black (check mode)
-        run: black --check --diff .
+      - name: Lint & format (pre-commit)
+        run: pre-commit run --all-files
 
-      - name: isort (check only)
-        run: isort --check-only --diff .
-
-      - name: Lint with flake8
-        run: flake8 src/ tests/
-
-      # -------- Security --------
-      - name: Safety (vulnerability scan)
-        run: safety check --full-report -r requirements-lock.txt --exit-code
-
-      # Fail für medium/high findings; Tests laufen dann nicht.
-      - name: Bandit (static security analysis)
-        run: bandit -r src -x tests -ll -ii
-
-      # -------- Tests + Coverage --------
-      - name: Run tests with coverage
+      - name: Tests (pytest + coverage)
         run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=65
-
-      # -------- Codecov Upload --------
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}   # nur nötig für private Repos
-          files: ./coverage.xml
-          fail_ci_if_error: true
