@@ -75,8 +75,9 @@ pre-commit run --all-files
 python-http-client-demo/
 ├─ src/demo_client/
 │  ├─ __init__.py
-│  └─ <modules>.py
+│  └─ __main__.py  # Entry point für `python -m demo_client`
 ├─ tests/
+├─ commits.md
 ├─ pyproject.toml
 └─ README.md
 ```
@@ -87,6 +88,7 @@ python-http-client-demo/
 - Keep network code thin and pure; isolate side-effects.
 - Enforce formatting & linting via pre-commit.
 - Fail CI on style or security regressions.
+- See [commits.md](./commits.md) for Conventional Commits guidelines.
 
 ---
 
