@@ -15,3 +15,11 @@ build/
 
 # Backups
 *.bak
+
+# Coverage reports
+coverage.xml
+htmlcov/
+
+# Coverage
+coverage.xml
+htmlcov/
