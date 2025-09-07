@@ -2,17 +2,30 @@ name: CI
 
 on:
   push:
+    branches: [ master ]
   pull_request:
+    branches: [ master ]
+
+# Verhindert parallele/überholte Läufe auf demselben Branch
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ci:
+    # Vermeidet doppelte Läufe bei PRs aus demselben Repo (push + pull_request)
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       - name: Install deps (editable + dev)
         run: |
@@ -24,3 +37,27 @@ jobs:
 
       - name: Tests (pytest + coverage)
         run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=65
+
+      # ----- Optional: Security & Coverage-Upload (nicht-blockierend) -----
+      - name: Freeze deps for Safety
+        if: always()
+        run: pip freeze > requirements-lock.txt
+
+      - name: Safety (vulnerability scan)
+        if: always()
+        continue-on-error: true
+        run: safety check --full-report -r requirements-lock.txt --exit-code
+
+      - name: Bandit (static analysis)
+        if: always()
+        continue-on-error: true
+        run: bandit -r src -x tests -ll -ii
+
+      - name: Upload coverage to Codecov
+        if: always()
+        continue-on-error: true
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}  # nur für private Repos nötig
+          fail_ci_if_error: false
