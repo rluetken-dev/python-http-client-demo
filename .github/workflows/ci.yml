@@ -5,12 +5,11 @@ on:
   pull_request:
 
 permissions:
-  contents: read  # recommended for Codecov v4
+  contents: read
 
 jobs:
   ci:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,12 +20,13 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
-      - name: Install dependencies
+      # Installiere ALLES aus pyproject (inkl. httpx, dev-tools)
+      - name: Install dependencies (editable + dev)
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest flake8 black isort pytest-cov bandit
-          pip install "safety<3.2" "typer<0.12" "marshmallow<4"
+          python -m pip install -U pip
+          pip install -e ".[dev]"
+          # Für Safety ein Freeze der tatsächlich installierten Pakete
+          pip freeze > requirements-lock.txt
 
       # -------- Format / Lint --------
       - name: Black (check mode)
@@ -40,9 +40,9 @@ jobs:
 
       # -------- Security --------
       - name: Safety (vulnerability scan)
-        run: safety check --full-report -r requirements.txt --exit-code 
+        run: safety check --full-report -r requirements-lock.txt --exit-code
 
-      # Fail for medium/high findings; tests are then not executed at all.
+      # Fail für medium/high findings; Tests laufen dann nicht.
       - name: Bandit (static security analysis)
         run: bandit -r src -x tests -ll -ii
 
@@ -54,6 +54,6 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}   # for private repos (or if Codecov requires it)
+          token: ${{ secrets.CODECOV_TOKEN }}   # nur nötig für private Repos
           files: ./coverage.xml
           fail_ci_if_error: true
