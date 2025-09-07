@@ -8,11 +8,8 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -20,9 +17,29 @@ jobs:
         run: |
           python -m pip install -U pip
           pip install -e ".[dev]"
+          pip freeze > requirements-lock.txt
 
       - name: Lint & format (pre-commit)
         run: pre-commit run --all-files
 
       - name: Tests (pytest + coverage)
         run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=65
+
+      # --- Optional: Security, nicht-blockierend ---
+      - name: Safety (vulnerability scan)
+        continue-on-error: true
+        run: safety check --full-report -r requirements-lock.txt --exit-code
+
+      - name: Bandit (static analysis)
+        continue-on-error: true
+        run: bandit -r src -x tests -ll -ii
+
+      # --- Optional: Codecov Upload ---
+      - name: Upload coverage to Codecov
+        if: always()
+        continue-on-error: true
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}  # nur privat nötig
+          fail_ci_if_error: false
