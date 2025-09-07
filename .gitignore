@@ -23,3 +23,9 @@ htmlcov/
 # Coverage
 coverage.xml
 htmlcov/
+
+# Coverage
+coverage.xml
+htmlcov/
+# Local safety freeze
+requirements-lock.txt
