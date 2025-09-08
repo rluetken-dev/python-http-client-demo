@@ -32,7 +32,7 @@ jobs:
         run: pre-commit run --all-files
 
       - name: Tests (pytest + coverage)
-        run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=0
+        run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml
 
       - name: Freeze deps for Safety
         if: always()
