@@ -29,3 +29,5 @@ coverage.xml
 htmlcov/
 # Local safety freeze
 requirements-lock.txt
+*:Zone.Identifier
+*.save
