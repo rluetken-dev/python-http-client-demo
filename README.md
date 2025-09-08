@@ -1,6 +1,6 @@
 # Demo HTTP Client (Python)
 
-![CI](https://img.shields.io/github/actions/workflow/status/rluetken-dev/python-http-client-demo/ci.yml?branch=main)
+![CI](https://img.shields.io/github/actions/workflow/status/rluetken-dev/python-http-client-demo/ci.yml?branch=main&event=push)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue)
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![Imports: isort](https://img.shields.io/badge/imports-isort-ef8336.svg)
