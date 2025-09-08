@@ -1,0 +1,27 @@
+import sys
+
+import demo_client.__main__ as cli
+
+
+def test_cli_ok(monkeypatch, capsys):
+    monkeypatch.setattr(
+        cli, "fetch_url", lambda u, t: {"ok": True, "status": 200, "data": {"hello": "world"}}
+    )
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["python", "-m", "demo_client", "--url", "https://example.com", "--timeout", "0.1"],
+    )
+    cli.main()
+    out = capsys.readouterr().out
+    assert '"ok": true' in out.lower()
+
+
+def test_cli_error(monkeypatch, capsys):
+    monkeypatch.setattr(cli, "fetch_url", lambda u, t: {"ok": False, "error": "boom"})
+    monkeypatch.setattr(
+        sys, "argv", ["python", "-m", "demo_client", "--url", "https://example.com"]
+    )
+    cli.main()
+    out = capsys.readouterr().out
+    assert "boom" in out
