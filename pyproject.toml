@@ -55,3 +55,6 @@ src_paths = ["src", "tests"]
 [tool.flake8]
 max-line-length = 100
 extend-ignore = ["E203", "W503"]  # kompatibel zu Black
+
+[tool.coverage.report]
+omit = ["src/demo_client/__main__.py"]
