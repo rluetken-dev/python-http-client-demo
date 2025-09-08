@@ -78,7 +78,7 @@ python-http-client-demo/
 │  ├─ __init__.py
 │  └─ __main__.py  # Entry point für `python -m demo_client`
 ├─ tests/
-├─ commits.md
+├─ COMMITS.md
 ├─ pyproject.toml
 └─ README.md
 ```
