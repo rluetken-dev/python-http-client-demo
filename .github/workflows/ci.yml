@@ -34,7 +34,6 @@ jobs:
       - name: Tests (pytest + coverage)
         run: pytest -q --cov=src --cov-report=term-missing --cov-report=xml --cov-fail-under=65
 
-      # ----- optional, nicht-blockierend -----
       - name: Freeze deps for Safety
         if: always()
         run: pip freeze > requirements-lock.txt

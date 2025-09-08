@@ -9,7 +9,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 [![Release](https://img.shields.io/github/v/release/rluetken-dev/python-http-client-demo?sort=semver&display_name=tag)](https://github.com/rluetken-dev/python-http-client-demo/releases)
 
-A small **Python CLI & library** for practicing clean code, packaging, and CI/CD.  
+A small **Python CLI & library** for practicing clean code, packaging, and CI/CD.
 Includes formatting, linting, security checks, and unit tests.
 
 ---

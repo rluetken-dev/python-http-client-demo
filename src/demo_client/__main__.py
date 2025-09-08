@@ -1,60 +1,26 @@
-from __future__ import annotations
-
 import argparse
-import sys
+import json
 
-try:
-    import httpx
-except Exception:
-    print(
-        "Missing dep: install with `pip install httpx` (inside your venv).",
-        file=sys.stderr,
-    )
-    raise
+from colorama import Fore, init
+
+from demo_client import fetch_url
+
+init(autoreset=True)  # Farben nach jeder Ausgabe zurücksetzen
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        prog="demo_client",
-        description="Tiny HTTP client demo",
-    )
-    parser.add_argument(
-        "method",
-        nargs="?",
-        default="get",
-        choices=["get", "head", "post"],
-        help="HTTP method",
-    )
-    parser.add_argument(
-        "url",
-        nargs="?",
-        default="https://httpbin.org/get",
-        help="Request URL",
-    )
-    parser.add_argument(
-        "--timeout",
-        type=float,
-        default=10.0,
-        help="Timeout in seconds (default: 10)",
-    )
-    parser.add_argument(
-        "--data",
-        help="POST data (raw string)",
-    )
-    args = parser.parse_args(argv)
+def parse_args():
+    p = argparse.ArgumentParser(description="HTTP client (httpx)")
+    p.add_argument("--url", "-u", default="https://httpbin.org/get", help="Target URL")
+    p.add_argument("--timeout", "-t", type=float, default=5.0, help="Timeout (s)")
+    return p.parse_args()
 
-    try:
-        with httpx.Client(timeout=args.timeout) as client:
-            resp = client.request(args.method.upper(), args.url, content=args.data)
-        print(f"Status: {resp.status_code}")
-        print(f"Content-Type: {resp.headers.get('content-type', '')}")
-        print("\n=== Body (first 800 chars) ===")
-        print(resp.text[:800])
-        return 0
-    except httpx.HTTPError as exc:
-        print(f"HTTP error: {exc}", file=sys.stderr)
-        return 2
+
+def main():
+    args = parse_args()
+    result = fetch_url(args.url, args.timeout)
+    pretty = json.dumps(result, indent=2, ensure_ascii=False)
+    print((Fore.GREEN if result.get("ok") else Fore.RED) + pretty)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()
