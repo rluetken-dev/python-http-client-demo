@@ -1,13 +1,13 @@
 # Demo HTTP Client (Python)
 
-![CI](https://github.com/rluetken-dev/python-http-client-demo/actions/workflows/ci.yml/badge.svg?branch=master)
+![CI](https://img.shields.io/github/actions/workflow/status/rluetken-dev/python-http-client-demo/ci.yml?branch=main)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue)
 ![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)
 ![Imports: isort](https://img.shields.io/badge/imports-isort-ef8336.svg)
 ![Security: Bandit](https://img.shields.io/badge/security-bandit-yellow.svg)
 ![Vuln DB: Safety](https://img.shields.io/badge/vulnerabilities-safety-red.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-[![Release](https://img.shields.io/github/v/release/rluetken-dev/python-http-client-demo?sort=semverhttps://img.shields.io/github/v/release/rluetken-dev/python-http-client-demo?sort=semverhttps://img.shields.io/github/v/release/rluetken-dev/python-http-client-demo?sort=semver&display_name=tag)](https://github.com/rluetken-dev/python-http-client-demo/releases)display_name=tag
+[![Release](https://img.shields.io/github/v/release/rluetken-dev/python-http-client-demo?sort=semver&display_name=tag)](https://github.com/rluetken-dev/python-http-client-demo/releases)
 
 A small **Python CLI & library** for practicing clean code, packaging, and CI/CD.  
 Includes formatting, linting, security checks, and unit tests.
