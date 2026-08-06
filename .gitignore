@@ -1,33 +1,32 @@
+# Virtual environments
 .venv/
-__pycache__/
-*.pyc
-# Python
+venv/
+
+# Python cache and build output
 __pycache__/
 *.py[cod]
 *.egg-info/
 dist/
 build/
-.venv/
+
+# Test, type-check, and coverage output
 .pytest_cache/
 .mypy_cache/
 .coverage
+coverage.xml
+htmlcov/
+
+# Tool caches
 .cache/
+.ruff_cache/
 
-# Backups
-*.bak
-
-# Coverage reports
-coverage.xml
-htmlcov/
-
-# Coverage
-coverage.xml
-htmlcov/
-
-# Coverage
-coverage.xml
-htmlcov/
-# Local safety freeze
+# Local generated files
 requirements-lock.txt
-*:Zone.Identifier
+*.bak
 *.save
+
+# OS and Windows metadata
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+*.Zone.Identifier

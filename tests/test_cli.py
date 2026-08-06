@@ -1,26 +1,37 @@
-# tests/test_cli.py
 import sys
 
-import demo_client.__main__ as cli  # wir patchen das fetch_url im CLI-Modul
+import demo_client.__main__ as cli
 
 
-def test_cli_ok(monkeypatch, capsys):
-    # Fake-HTTP: OK-Pfad
+def test_cli_prints_success_response(monkeypatch, capsys) -> None:
     monkeypatch.setattr(
         cli,
         "fetch_url",
         lambda url, timeout: {"ok": True, "status": 200, "data": {"hello": "world"}},
     )
-    monkeypatch.setattr(sys, "argv", ["python", "--url", "https://example.com", "--timeout", "0.1"])
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["python", "--url", "https://example.com", "--timeout", "0.1"],
+    )
+
     cli.main()
-    out = capsys.readouterr().out
-    assert '"ok": true' in out.lower()  # JSON-Ausgabe vorhanden
+
+    output = capsys.readouterr().out
+    assert '"ok": true' in output.lower()
+    assert '"hello": "world"' in output
 
 
-def test_cli_error(monkeypatch, capsys):
-    # Fake-HTTP: Fehlerpfad
-    monkeypatch.setattr(cli, "fetch_url", lambda url, timeout: {"ok": False, "error": "boom"})
+def test_cli_prints_error_response(monkeypatch, capsys) -> None:
+    monkeypatch.setattr(
+        cli,
+        "fetch_url",
+        lambda url, timeout: {"ok": False, "error": "boom"},
+    )
     monkeypatch.setattr(sys, "argv", ["python", "--url", "https://example.com"])
+
     cli.main()
-    out = capsys.readouterr().out
-    assert "boom" in out
+
+    output = capsys.readouterr().out
+    assert '"ok": false' in output.lower()
+    assert "boom" in output
