@@ -8,4 +8,4 @@ respx>=0.22.0
 
 # Dev (Lint/Format) – optional, aber praktisch
 black>=24.4
-ruff>=0.5
+ruff>=0.16.3
